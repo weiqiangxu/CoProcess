@@ -26,9 +26,16 @@ $urls = array(
 
 function task($url){
     echo 'get '.$url.PHP_EOL;
+    $ch = curl_init($url) ;
+    $output = "";
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true) ; // 获取数据返回
+    curl_setopt($ch, CURLOPT_BINARYTRANSFER, true) ; // 在启用 CURLOPT_RETURNTRANSFER 时候将获取数据返回
+    curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+    $output = curl_exec($ch);
     yield;
-    $res = curlGet($url);
-    echo $res.PHP_EOL;
+    curl_close($ch) ;
+    //输出结果
+    echo $output.PHP_EOL;
 }
 
 // 实例化一个调度器 - 花费时间2秒
